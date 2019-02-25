@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="APP_Name" value="goods-web" />
+	<property name="logbase" value="/data/logs/" />
+	<!--<property name="logbase" value="${catalina.base}/logs" />-->
+	<contextName>${APP_Name}</contextName>
+
+
+	<appender name="goods_console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="goods_errorFile"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logbase}/${APP_Name}/error.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logbase}/${APP_Name}/error_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="goods_rollingFile"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logbase}/${APP_Name}/server.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logbase}/${APP_Name}/server_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="goods_statFile"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logbase}/${APP_Name}/stat.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logbase}/${APP_Name}/stat_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd}_%d{HH:mm:ss} %-5level%logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- project default level -->
+	<logger name="cn.huace" level="info" />
+
+	<!--log4jdbc -->
+	<logger name="jdbc.sqltiming" level="info" />
+
+	<logger name="cn.huace.statis.utils.StatUtils">
+		<level value="info"/>
+		<appender-ref ref="goods_statFile"/>
+	</logger>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="goods_console" />
+		<appender-ref ref="goods_rollingFile" />
+	</root>
+	<root >
+		<level value="error" />
+		<appender-ref ref="goods_errorFile" />
+	</root>
+
+</configuration>

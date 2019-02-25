@@ -1,0 +1,61 @@
+server:
+    display-name: statis-web
+    contextPath: /statis-web/
+    port: 8083
+spring:
+    datasource:
+        name: statis-web
+        #本地
+#        driver-class-name: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://127.0.0.1:3306/shopingcar?useUnicode=true&characterEncoding=UTF-8
+#        username: root
+#        password: huaceDB123@
+
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        filters: stat,wall,log4j
+        maxActive: 60
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        # 合并多个DruidDataSource的监控数据
+        #spring.datasource.useGlobalDataSourceStat=true
+    jpa:
+       properties:
+           hibernate:
+             dialect: org.hibernate.dialect.MySQL5Dialect
+       showSql: false
+       hibernate:
+         ddlAuto: none
+    jackson:
+          date-format: yyyy-MM-dd HH:mm:ss
+    mvc:
+        view:
+            prefix: /templates/
+            suffix: .ftl
+        throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
+    freemarker:
+        cache: false
+        request-context-attribute: request
+
+#统计日志路径
+statFilePath: /data/logs/api-web/stat/
+
+logback:
+       logdir: /data/logs
+       appName: statis-web
+#阿里大鱼短信
+
+
+

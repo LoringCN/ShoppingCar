@@ -1,0 +1,61 @@
+server:
+    display-name: schedule-web
+    contextPath: /schedule-web/
+    port: 8086
+spring:
+    datasource:
+        name: schedule-web
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat,wall,log4j
+        maxActive: 60
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        # 合并多个DruidDataSource的监控数据
+        #spring.datasource.useGlobalDataSourceStat=true
+    jpa:
+       properties:
+           hibernate:
+             dialect: org.hibernate.dialect.MySQL5Dialect
+       showSql: false
+       hibernate:
+         ddlAuto: none
+    jackson:
+          date-format: yyyy-MM-dd HH:mm:ss
+    mvc:
+        view:
+            prefix: /templates/
+            suffix: .ftl
+        throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
+    freemarker:
+        cache: false
+        request-context-attribute: request
+#    data:
+#        solr:
+#            host: http://127.0.0.1:8983/solr
+#            repositories:
+#              enabled: true
+
+#阿里云存储
+accessKeyId:
+accessKeySecret:
+ossURL:
+fileTemp: /opt/temp/
+
+#阿里大鱼短信
+
+
+
